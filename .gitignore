@@ -1,0 +1,25 @@
+# --- Keep the private SmileyLlama/GID4 code out of this (public) repo ---
+# smileyllama-gid4/ is its own git repository and must never be committed here.
+smileyllama-gid4/
+
+# --- Docking run outputs ---
+runs/
+docking/**/vina_out/
+*.pose.pdbqt
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# --- OS / editor ---
+.DS_Store
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,30 @@
+# Conda environment for the GID4 docking module ONLY.
+#
+# Kept deliberately separate from the ABFE / mbar / server environment so the
+# docking dependencies (vina, openbabel, plip, meeko, dimorphite, rdkit) never
+# collide with the simulation stack (openmm, openff, alchemlyb, the web server,
+# etc.). Create with:
+#
+#     conda env create -f docking/environment.yml
+#     conda run -n docking python -m docking.run_docking --help
+#
+# These versions mirror the already-working `docking-reward` env on this
+# machine and the cluster. On a GPU node you can additionally install
+# `unidock` and point --vina-exec at it.
+name: docking
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy=1.26
+  - pandas
+  - scipy
+  - pyyaml
+  - rdkit=2025.9
+  - openbabel
+  - vina=1.2.6
+  - pip
+  - pip:
+      - meeko==0.7.1
+      - plip==3.0.0
+      - dimorphite-dl==2.0.2
