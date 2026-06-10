@@ -57,7 +57,7 @@ Override inputs with flags (paths relative to this directory):
 ```bash
 bash run.sh \
   --ligand ./my_pose.sdf \
-  --protein ./9qdz_fixed_dry.pdb \
+  --protein ../data/9qdz.pdb \
   --config ./config_abfe.yml
 ```
 
