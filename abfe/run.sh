@@ -1,8 +1,48 @@
 set -o pipefail
 
-LIGAND_SDF=${LIGAND_SDF:-./v2_1b_1place.sdf}
-PROTEIN_PDB=${PROTEIN_PDB:-./9qdz_fixed_dry.pdb}
-ABFE_CONFIG=${ABFE_CONFIG:-./config_abfe.yaml}
+LIGAND_SDF=./v2_1b_1place.sdf
+PROTEIN_PDB=../data/9qdz.pdb
+ABFE_CONFIG=./config_abfe.yml
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Run ABFE: ligand pargen, setup, MD on three legs, and analysis.
+
+Options:
+  -l, --ligand PATH    Ligand SDF (default: ./v2_1b_1place.sdf)
+  -p, --protein PATH   Protein PDB (default: ./9qdz_fixed_dry.pdb)
+  -c, --config PATH    ABFE config YAML (default: ./config_abfe.yml)
+  -h, --help           Show this help
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -l|--ligand)
+            LIGAND_SDF=$2
+            shift 2
+            ;;
+        -p|--protein)
+            PROTEIN_PDB=$2
+            shift 2
+            ;;
+        -c|--config)
+            ABFE_CONFIG=$2
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            usage >&2
+            exit 1
+            ;;
+    esac
+done
 
 JOB_TAG=${SLURM_JOB_ID:-local-$$}
 JOB_DIR=$(pwd)
