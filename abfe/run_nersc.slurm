@@ -21,5 +21,5 @@ chmod +x run.sh
 # ./run.sh ...
 # ./run.sh ...
 
-# if the run is terminated because of the TIMEOUT, you need to use the EAYBFE_FORCE_RUN environment variable to restart the run
-# e.g. EAYBFE_FORCE_RUN=1 ./run.sh -l ./v2_1b_1place.sdf -p ../data/9qdz.pdb -c ./config_abfe.yml --force
+# if the last run is terminated because of the TIMEOUT, you need to use the EAYBFE_FORCE_RUN environment variable to restart the run
+# e.g. EAYBFE_FORCE_RUN=1 ./run.sh -l ./v2_1b_1place.sdf -p ../data/9qdz.pdb -c ./config_abfe.yml
