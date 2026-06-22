@@ -13,4 +13,13 @@
 #SBATCH --mail-user=ericwangyz@berkeley.edu
 
 source /pscratch/sd/e/eric6/easybfe.env
-bash run.sh
+chmod +x run.sh
+
+# This setting will yield a run time around ~3h per-abfe task and roughly ~15-16 abfe runs can be done within 48h
+# Each premium queue can harbor 5 jobs, so the throughput should be ~40 abfes/day
+./run.sh -l ./v2_1b_1place.sdf -p ../data/9qdz.pdb -c ./config_abfe.yml
+# ./run.sh ...
+# ./run.sh ...
+
+# if the run is terminated because of the TIMEOUT, you need to use the `--force` tag to restart the run
+# e.g. ./run.sh -l ./v2_1b_1place.sdf -p ../data/9qdz.pdb -c ./config_abfe.yml --force
