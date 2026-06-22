@@ -3,6 +3,7 @@ set -o pipefail
 LIGAND_SDF=./v2_1b_1place.sdf
 PROTEIN_PDB=../data/9qdz.pdb
 ABFE_CONFIG=./config_abfe.yml
+FORCE_RUN=${EAYBFE_FORCE_RUN:-0}
 
 usage() {
     cat <<EOF
@@ -74,6 +75,10 @@ restart_mps() {
 run_abfe_leg () {
     local leg_dir=$(realpath $1)
     cd $leg_dir || { echo "Failed to cd to $leg_dir" && return 1; }
+    if [ ${FORCE_RUN} -eq 1 ]; then
+        rm *.tag
+        echo "Deleting all tags under $leg_dir to enable force run"
+    fi
     if [ ! -f done.tag ] && [ ! -f error.tag ] && [ ! -f running.tag ]; then
         echo "Running ABFE leg: $leg_dir"
         bash run.sh > run.log 2>&1 || { restart_mps && return 1; }
@@ -91,7 +96,7 @@ run_abfe() {
     cd $path
     if [ -f "complex/done.tag" ] && [ -f "restraint/done.tag" ] && [ -f "solvent/done.tag" ]; then
         echo "Analyzing ABFE results: $path"
-        easybfe abfe analyze . > analyze.log 2>&1 || { restart_mps && return 1; }
+        easybfe abfe analyze . --force > analyze.log 2>&1 || { restart_mps && return 1; }
     fi
     cd $JOB_DIR
 }
